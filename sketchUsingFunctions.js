@@ -213,8 +213,8 @@ function Coin() {
         show: function () {
             if (!coinTrapped) {
                 fill(255, 255, 0);
-                ellipse(coinX, coinY, 15, 15);
-                /*ellipse(coinX2, coinY2, 15, 15);*/
+                ellipse(coinX, coinY, 15, 15)
+                ellipse(coinX2, coinY2, 15, 15);
             }
         },
        /* show: function () {
@@ -277,6 +277,7 @@ function draw() {
             if (pj.getVida() == 0) {
                 pant = 1;
             }
+            fill(255);
             text("Vidas: " +pj.getVida(),50,450)
             break;
         case 1:

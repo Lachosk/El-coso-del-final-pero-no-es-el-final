@@ -267,7 +267,7 @@ function setup() {
 function draw() {
     switch (pant) {
         case 0:
-            background(5);
+            background(0);
             map.show();
             pj.show();
             enemy.show();

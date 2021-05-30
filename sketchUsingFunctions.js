@@ -189,31 +189,58 @@ function Enemy() {
 function Coin() {
     let coinX;
     let coinY;
+    let coinX2;
+    let coinY2;
     let coinCol;
     let coinFil;
+    let coinCol2;
+    let coinFil2;
     let coinTrapped;
+   
     return {
+        
         init: function () {
             coinCol = 5;
             coinFil = 5;
+            coinCol2 = 5;
+            coinFil2 = 5;
             coinX = (coinCol * 40) + 20;
             coinY = (coinFil * 40) + 20;
+            coinX2 = (coinCol2 * 40) + 60;
+            coinY2 = (coinFil2 * 40) + 20;
             coinTrapped = false;
         },
         show: function () {
             if (!coinTrapped) {
                 fill(255, 255, 0);
                 ellipse(coinX, coinY, 15, 15);
+                /*ellipse(coinX2, coinY2, 15, 15);*/
             }
         },
+       /* show: function () {
+            if (!coinTrapped2) {
+                fill(255, 255, 0);
+                ellipse(coinX2, coinY2, 15, 15);
+            }
+        },*/
+        
         getX: function () {
             return coinX;
         },
         getY: function () {
             return coinY;
         },
+        getX2: function () {
+            return coinX2;
+        },
+        getY2: function () {
+            return coinY2;
+        },
         setTrapped: function (newTrappedState) {
             coinTrapped = newTrappedState;
+        },
+        setTrapped2: function (newTrappedState2) {
+            coinTrapped2 = newTrappedState2;
         }
     }
 }
@@ -226,7 +253,7 @@ const coin = new Coin();
 let pant
 
 function setup() {
-    createCanvas(400, 600);
+    createCanvas(400, 500);
     // init all instances with generic values
     map.init();
     pj.init();
@@ -250,6 +277,7 @@ function draw() {
             if (pj.getVida() == 0) {
                 pant = 1;
             }
+            text("Vidas: " +pj.getVida(),50,450)
             break;
         case 1:
             background(0);

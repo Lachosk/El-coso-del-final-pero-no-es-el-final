@@ -1,5 +1,6 @@
 function Terrain() {
     // Como construimos nuestro mapa
+    
     let mapa = [];
     return {
         init: function () {
@@ -37,6 +38,7 @@ function Terrain() {
                     rect(col * 40, fil * 40, 40, 40);
                 }
             }
+            //image(bckimage,0,0);
         },
         getValueLocation: function (nfil, ncol) {
             return mapa[nfil][ncol];
@@ -65,9 +67,13 @@ function Player() {
             yPos = (pjFil * 40) + 20; // validamos el mapa en la matriz
 
         },
-        show: function () {
-            fill(255, 0, 0);
-            ellipse(xPos, yPos, 30, 30);
+        show: function (img) {
+           fill(255, 0, 0);
+           ellipse(xPos, yPos, 30, 30);
+           //console.log(ImgPlayer);
+           imageMode(CENTER);
+           image(img, xPos, yPos);
+           imageMode(CORNER);
         },
         updateLocation: function () {
             xPos = (pjCol * 40) + 20; // validamos el mapa en la matriz
@@ -189,32 +195,33 @@ function Enemy() {
 function Coin() {
     let coinX;
     let coinY;
-    let coinX2;
-    let coinY2;
+    //let coinX2;
+   // let coinY2;
     let coinCol;
     let coinFil;
-    let coinCol2;
-    let coinFil2;
+  //  let coinCol2;
+  //  let coinFil2;
     let coinTrapped;
    
     return {
         
-        init: function () {
-            coinCol = 5;
-            coinFil = 5;
-            coinCol2 = 5;
-            coinFil2 = 5;
+        init: function (pfil, pcol) {
+            coinCol = pcol;
+            coinFil = pfil;
+           // coinCol2 = 5;
+           // coinFil2 = 5;
             coinX = (coinCol * 40) + 20;
             coinY = (coinFil * 40) + 20;
-            coinX2 = (coinCol2 * 40) + 60;
-            coinY2 = (coinFil2 * 40) + 20;
-            coinTrapped = false;
+           // coinX2 = (coinCol2 * 40) + 60;
+           // coinY2 = (coinFil2 * 40) + 20;
+           /*for (let coinCol = 0; fil < 10; coinCol++) {
+            coinTrapped = false;*/
         },
         show: function () {
             if (!coinTrapped) {
                 fill(255, 255, 0);
                 ellipse(coinX, coinY, 15, 15)
-                ellipse(coinX2, coinY2, 15, 15);
+                //ellipse(coinX2, coinY2, 15, 15);
             }
         },
        /* show: function () {
@@ -230,26 +237,34 @@ function Coin() {
         getY: function () {
             return coinY;
         },
-        getX2: function () {
+        /*getX2: function () {
             return coinX2;
-        },
-        getY2: function () {
+        },*/
+       /* getY2: function () {
             return coinY2;
-        },
+        },*/
         setTrapped: function (newTrappedState) {
             coinTrapped = newTrappedState;
         },
-        setTrapped2: function (newTrappedState2) {
+       /* setTrapped2: function (newTrappedState2) {
             coinTrapped2 = newTrappedState2;
-        }
+        }*/
     }
 }
 
+let imgBackground;
+let ImgPlayer;
+function preload(){
+    imgBackground = loadImage("./data/mapa_fondo.png");
+    ImgPlayer = loadImage("./data/Player.png");    
+}
+
 // lets use the constructor functions
-const map = new Terrain();
+const map = new Terrain(imgBackground);
 const pj = new Player();
 const enemy = new Enemy();
 const coin = new Coin();
+const coin2 = new Coin();
 let pant
 
 function setup() {
@@ -258,7 +273,8 @@ function setup() {
     map.init();
     pj.init();
     enemy.init();
-    coin.init();
+    coin.init(5,5);
+    coin2.init(5,6);
     pant = 0;
 }
 
@@ -268,11 +284,14 @@ function draw() {
     switch (pant) {
         case 0:
             background(0);
-            map.show();
-            pj.show();
+            
+            //map.show();
+            image(imgBackground,0,0)
+            pj.show(ImgPlayer);
             enemy.show();
             enemy.move(map);
             coin.show();
+            coin2.show();
             verifyEnemy();
             if (pj.getVida() == 0) {
                 pant = 1;
@@ -336,12 +355,16 @@ function verifyItem() {
     if (dist(pj.getX(), pj.getY(), coin.getX(), coin.getY()) < 5) {
         coin.setTrapped(true);
     }
+    if (dist(pj.getX(), pj.getY(), coin2.getX(), coin2.getY()) < 5) {
+        coin2.setTrapped(true);
+    }
 }
 
 function verifyEnemy() {
     if (dist(pj.getX(), pj.getY(), enemy.getX(), enemy.getY()) < 5) {
         pj.pvida();
-        coin.init();
+        coin.init(5,5);
+        coin2.init(5,6);
         pj.reset();
         enemy.init();
     }

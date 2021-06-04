@@ -54,14 +54,14 @@ function Player() {
     let vidas;
     return {
         init: function () {
-            pjCol = 0; // pixeles
+            pjCol = 5; // pixeles
             pjFil = 0; // pixeles
             xPos = (pjCol * 40) + 20; // validamos el mapa en la matriz
             yPos = (pjFil * 40) + 20; // validamos el mapa en la matriz
             vidas = 3;
         },
         reset: function () {
-            pjCol = 0; // pixeles
+            pjCol = 5; // pixeles
             pjFil = 0; // pixeles
             xPos = (pjCol * 40) + 20; // validamos el mapa en la matriz
             yPos = (pjFil * 40) + 20; // validamos el mapa en la matriz
